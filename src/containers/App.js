@@ -3,6 +3,7 @@ import CardsArray from "../components/CardsArray";
 import SearchBox from "../components/SearchBox";
 import "./App.css";
 import Scroll from "../components/Scroll";
+import ErrorBoundry from "../components/ErrorBoundry";
 
 class App extends Component {
     constructor() {
@@ -29,7 +30,7 @@ class App extends Component {
         const filteredRobots = robots.filter(robot => {
             return robot.name.toLowerCase().includes(searchfield.toLowerCase())
         })
-        
+
         return !robots.length ?
         <h1 className="tc bg-light-green dib br3 pa3 ma100">Loading....</h1> :
         (
@@ -37,7 +38,9 @@ class App extends Component {
                 <h1 className="f1">RoboFriends</h1>
                 <SearchBox searchChange={this.onSearchChange}/>
                 <Scroll>
-                    <CardsArray robots={filteredRobots} />    
+                    <ErrorBoundry>
+                        <CardsArray robots={filteredRobots} />
+                    </ErrorBoundry>    
                 </Scroll>
             </div>
         );  
